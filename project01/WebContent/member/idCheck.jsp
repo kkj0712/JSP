@@ -1,16 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="/project01/js/member.js"></script>
-</head>
-<body>
-<h2>아이디 중복확인</h2>
-아이디 <input type="text" name="userid" id="userid">
-<input type="button" value="사용" id="idCheckBtn">
-</body>
-</html>
+
+<div class="container">
+    <div class="row">
+	    <div class="col">
+	      <br/>
+	      <input type="text" class="form-control" id="userid" placeholder="Enter id" name="userid" >
+	    </div>
+      	<div class="col align-self-end" >
+          <button  type="button"  id="useBtn"  class="btn btn-primary">사용여부</button>
+   		</div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 package com.member.action;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,20 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.member.model.MemberDTO;
 import com.member.model.SMemberDAOImpl;
 
 /**
- * Servlet implementation class MemberList
+ * Servlet implementation class MemberIdCheck
  */
-@WebServlet("/member/list.me")
-public class MemberList extends HttpServlet {
+@WebServlet("/member/idCheck.me")
+public class MemberIdCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberList() {
+    public MemberIdCheck() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,14 +31,7 @@ public class MemberList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		SMemberDAOImpl dao=SMemberDAOImpl.getInstance();
-		ArrayList<MemberDTO> arr= dao.memberList();
-		int count=dao.getCount();
-		request.setAttribute("members", arr);
-		request.setAttribute("count", count);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("list.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("idCheck.jsp");
 		rd.forward(request, response);
 	}
 
@@ -47,7 +39,12 @@ public class MemberList extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		request.setCharacterEncoding("utf-8");
+		String userid=request.getParameter("userid");
+		SMemberDAOImpl dao=SMemberDAOImpl.getInstance();
+		String flag=dao.idCheck(userid);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out=response.getWriter();                     
+		out.println(flag);
 	}
-
 }

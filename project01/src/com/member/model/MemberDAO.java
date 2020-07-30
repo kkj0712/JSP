@@ -19,5 +19,5 @@ public interface MemberDAO {
 	//로그인 체크 (리턴값은 flag)
 	public int loginCheck(String userid, String pwd);
 	//전체회원 수
-	public int memberCount();
+	public int getCount();
 }

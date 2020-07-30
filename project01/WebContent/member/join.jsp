@@ -6,10 +6,10 @@
     <div class="row">
 	    <div class="col">
 	      <label for="userid">id:</label>
-	      <input type="text" class="form-control" id="userid" placeholder="Enter id" name="userid" >
+	      <input type="text" class="form-control" id="userid" placeholder="Enter id" name="userid" readonly="readonly">
 	    </div>
       	<div class="col align-self-end" >
-          <button  type="button"  id="idcheck"  class="btn btn-primary">중복확인</button>
+          <button  type="button"  id="idcheckBtn"  class="btn btn-primary">중복확인</button>
    		</div>
     </div>
     
