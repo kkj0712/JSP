@@ -6,7 +6,21 @@ public class PageUtil {
 	private int startPage;
 	private int totPage;
 	private int pageBlock;
+	private String field;
+	private String word;
 	
+	public String getField() {
+		return field == null ? "" : field.trim();
+	}
+	public void setField(String field) {
+		this.field = field;
+	}
+	public String getWord() {
+		return word == null ? "" : word.trim();
+	}
+	public void setWord(String word) {
+		this.word = word;
+	}
 	public int getCurrentPage() {
 		return currentPage;
 	}

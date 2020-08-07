@@ -76,7 +76,7 @@ public class BoardListAction extends HttpServlet {
 		request.setAttribute("board", arr);
 		request.setAttribute("count", count);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("list.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("listResult.jsp");
 		rd.forward(request, response);
 	}
 

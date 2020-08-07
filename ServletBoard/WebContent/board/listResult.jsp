@@ -1,43 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<style type="text/css">
+ h4 a{
+ 	text-decoration: none;
+ 	color: black;
+ }
+</style>
 </head>
 <body>
-<h5>평가 리스트(<span id="cntSpan">${count}</span>)</h5>
+<h4><a href="list.jsp">Board(<span id="cntSpan">${count}</span>)</a></h4>
 <table class="table table-hover">
 	<thead>
 		<tr>
 			<th>번호</th>
-			<th>seq</th>
 			<th>글쓴이</th>
-			<th>평가</th>
+			<th>제목</th>
 			<th>작성일</th>
-			<c:if test="${sessionScope.login!=null}">
-			<th>삭제</th>
-			</c:if>
+			<th>조회수</th>
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach items="${guest}" var="guest" varStatus="st">
+		<c:forEach items="${board}" var="board" varStatus="st">
 		<tr>
 			<td>${rowNo-st.index}</td>
-			<td>${guest.num}</td>
-			<td><a href="javascript:fview(${guest.num})">${guest.name}</a></td>
-			<td>${guest.grade}</td>
-			<td>${guest.created}</td>
-			<c:if test="${sessionScope.login!=null}">
-				<td><a href="javascript:fdelete(${guest.num},'${guest.name}')">삭제</a></td>
-			</c:if>
+			<td>${board.writer}</td>
+			<td><a href="detail?num=${board.num}">${board.subject}</a></td>
+			<td>${board.reg_date}</td>
+			<td>${board.readcount}</td>
 		</tr>
 		</c:forEach>
 	</tbody>
@@ -58,5 +58,4 @@
 		<a href="javascript:getData(${pu.endPage+1},'${pu.field}','${pu.word}')">[다음]</a>
 	</c:if>
 </div>
-</body>
-</html>
+<br/><br/>

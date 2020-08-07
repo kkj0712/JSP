@@ -17,6 +17,7 @@ public class BoardDAOImpl implements BoardDAO{
 	public static BoardDAOImpl getInstance() {
 		return instance;
 	}
+	
 	private Connection getConnection() throws Exception{
 		Context initCtx=new InitialContext();
 		Context envCtx=(Context) initCtx.lookup("java:comp/env");
@@ -146,19 +147,121 @@ public class BoardDAOImpl implements BoardDAO{
 	
 	//상세보기
 	public BoardDTO boardfindById(int num) {
-		return null;
+		Connection con=null;
+		Statement st=null;
+		ResultSet rs=null;
+		BoardDTO dto=null;
+		
+		try {
+			con=getConnection();
+			st=con.createStatement();
+			st.execute("update tbl_board set readcount = readcount+1 where num ="+num);
+			String sql = "SELECT * FROM tbl_board WHERE num="+num;
+			rs=st.executeQuery(sql);
+			if(rs.next()) {
+				dto=new BoardDTO();
+				dto.setNum(rs.getInt("num"));
+				dto.setContent(rs.getString("content"));
+				dto.setReadcount(rs.getInt("readcount"));
+				dto.setReg_date(rs.getString("reg_date"));
+				dto.setSubject(rs.getString("subject"));
+				dto.setWriter(rs.getString("writer"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, st, rs);
+		}
+		return dto;
 	}
 
 	//수정
-	public void boardUpdate(BoardDTO board) {
+	public BoardDTO boardUpdate(BoardDTO board) {
+		Connection con=null;
+		PreparedStatement ps=null;
 		
+		try {
+			con=getConnection();
+			String sql="update tbl_board set content=?, subject=?, reg_date=sysdate where num=?";
+			ps=con.prepareStatement(sql);
+			ps.setString(1, board.getContent());
+			ps.setString(2, board.getSubject());
+			ps.setInt(3, board.getNum());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, ps);
+		}
+		return board;
 	}
 
 	//삭제
 	public void boardDelete(int num) {
+		Connection con=null;
+		Statement st=null;
 		
+		try {
+			con=getConnection();
+			st=con.createStatement();
+			String sql="delete from tbl_board where num="+num;
+			st.executeUpdate(sql);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, st, null);
+		}
 	}
-
+	
+	//코멘트 추가 commentInsert
+	public void commentInsert(CommentDTO comment) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		
+		try {
+			con=getConnection();
+			String sql="insert into comment_table(cnum, userid, msg, reg_date, bnum) "
+					+ "values(comment_table_seq.nextval,?,?,sysdate,?)";
+			ps=con.prepareStatement(sql);
+			ps.setString(1, comment.getUserid());
+			ps.setString(2, comment.getMsg());
+			ps.setInt(3, comment.getBnum());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, ps);
+		}
+	}
+	
+	//코멘트 리스트 commentList
+	public ArrayList<CommentDTO> commentList(int bnum){
+		Connection con=null;
+		Statement st=null;
+		ResultSet rs=null;
+		ArrayList<CommentDTO> arr=new ArrayList<CommentDTO>();
+		try {
+			con=getConnection();
+			String sql="select * from comment_table where bnum="+bnum+ "order by cnum desc";
+			st=con.createStatement();
+			rs=st.executeQuery(sql);
+			while(rs.next()) {
+				CommentDTO comment=new CommentDTO();
+				comment.setBnum(rs.getInt("bnum"));
+				comment.setCnum(rs.getInt("cnum"));
+				comment.setMsg(rs.getString("msg"));
+				comment.setReg_date(rs.getString("reg_date"));
+				comment.setUserid(rs.getString("userid"));
+				arr.add(comment);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, st, rs);
+		}
+		return arr;
+	}
+	
 	//닫기 closeConnection
 	private void closeConnection(Connection con, PreparedStatement ps) {
 		try {

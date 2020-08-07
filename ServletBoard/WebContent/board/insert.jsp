@@ -12,66 +12,56 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script>
-$(document).ready(function(){
-	getData(1, "", "");
-	$("#btnSearch").on("click", function(){
-		getData(1, $("#field").val(), $("#word").val());
-	})//btnSearch
-	
-})//document
-
-function getData(pageNum, field, word){
-	$.get("list", 
-			{"pageNum":pageNum, "field":field, "word":word},
-			function(d){
-			$("#result").html(d);
-	})
-}//getData
-
+//취소 함수
+function back(){
+	if($("#writer").val()!="" || $("#writer").val()!="" || $("#writer").val()!=""){
+		if(confirm("글 작성을 취소하시겠습니까? 작성하시던 글은 저장되지 않습니다.")){
+			location.href="list.jsp";
+		}
+	}else{
+		location.href="list.jsp";
+	}
+}
+//공백확인 함수
+function check(){
+	if($("#writer").val()==""){
+		alert("글쓴이를 입력하세요");
+		$("#writer").focus();
+		return false;
+	}
+	if($("#subject").val()==""){
+		alert("제목을 입력하세요");
+		$("#subject").focus();
+		return false;
+	}
+	if($("#content").val()==""){
+		alert("내용을 입력하세요");
+		$("#content").focus();
+		return false;
+	}
+	return true;
+}
 </script>
 </head>
 <body>
-<form action="insert" method="post">
-<table>
-	<tr>
-		<td align="center">글쓴이</td>
-		<td>
-			<input type="text" size="20" id="writer" name="writer" >
-		</td>
-	</tr>
-	<tr>
-		<td align="center">제목</td>
-		<td>
-			<input type="text" size="20" id="subject" name="subject" >
-		</td>
-	</tr>
-	<tr>
-		<td align="center">내용</td>
-		<td>
-			<textarea rows="5" cols="40" id="content" name="content"></textarea>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-			<input type="submit" value="submit전송">
-		</td>
-	</tr>
-</table>
+<div class="container">
+<h2>글작성</h2>
+<form action="insert" method="post" onsubmit="return check();">
+      <label>글쓴이</label>
+    <div class="form-group">
+      <input type="text" size="20" id="writer" name="writer" >
+    </div>
+      <label>제목</label>
+    <div class="form-group">
+      <input type="text" size="37" id="subject" name="subject" >
+    </div>
+      <label>내용</label>
+    <div class="form-group">
+      <textarea rows="5" cols="40" id="content" name="content"></textarea>
+    </div>
+   	 	<button type="submit" class="btn btn-primary">전송</button>
+   	 	<button type="reset" class="btn btn-gray" onclick="javascript:back()">취소</button>
 </form>
-<br/><br/>
-<div align="center">
-	<form id="search" name="search">
-		<select name="field" id="field">
-			<option value="name">글쓴이</option>
-			<option value="subject">제목</option>
-		</select>
-		<input type="text" name="word" id="word">
-		<input type="button" value="찾기" id="btnSearch">
-	</form>
 </div>
-<br/><br/>
-<div align="center" id="result"></div>
-<hr>
-<div id="view"></div>
 </body>
 </html>

@@ -42,8 +42,10 @@ public class GuestListAction extends HttpServlet {
 		int startRow=(currentPage-1)*pageSize+1;
 		int endRow=currentPage*pageSize;
 				
-		int count=dao.guestCount();
-		
+		int count=0;
+		String field=request.getParameter("field")==null?"":request.getParameter("field");
+		String word=request.getParameter("word")==null?"":request.getParameter("word");
+		count=dao.guestCount(field, word);
 		//총페이지 수
 		int totPage=(count/pageSize)+(count%pageSize==0?0:1);
 		int pageBlock=3;
@@ -57,9 +59,17 @@ public class GuestListAction extends HttpServlet {
 		pu.setPageBlock(pageBlock);
 		pu.setStartPage(startPage);
 		pu.setTotPage(totPage);
+		pu.setField(field);
+		pu.setWord(word);
 		
-		ArrayList<GuestDTO> arr=dao.guestList(startRow,endRow);
+		ArrayList<GuestDTO> arr=null;
+		if(word.equals("")) {
+			arr=dao.guestList(startRow,endRow);
+		}else {
+			arr=dao.guestList(field, word, startRow,endRow);
+		}
 		
+  		
 		int rowNo=count-((currentPage-1)*pageSize); //매 페이지의 시작번호
 		
 		request.setAttribute("rowNo", rowNo);

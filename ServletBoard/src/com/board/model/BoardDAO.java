@@ -10,7 +10,7 @@ public interface BoardDAO {
 	//상세보기
 	public BoardDTO boardfindById(int num);
 	//수정
-	public void boardUpdate(BoardDTO board);
+	public BoardDTO boardUpdate(BoardDTO board);
 	//삭제
 	public void boardDelete(int num);
 }
