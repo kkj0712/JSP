@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+ <mapper namespace="org.addrMy.config.ObjectMapper">
+ <!-- insert -->
+ <insert id="insertData" parameterType="org.addrMy.model.AddressVO">
+ 	insert into address(num, name, zipcode, addr, tel)
+	values(address_seq.nextval,#{name},#{zipcode},#{addr},#{tel})
+ </insert>
+ 
+ <!-- all select -->
+ <select id="listData" resultType="org.addrMy.model.AddressVO">
+ 	select * from address
+ </select>
+ 
+ <!-- count -->
+ <select id="countData" resultType="Integer">
+ 	select count(*) from address
+ </select>
+ </mapper>
