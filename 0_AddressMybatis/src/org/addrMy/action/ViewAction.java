@@ -16,19 +16,17 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
-import sun.rmi.server.Dispatcher;
-
 /**
- * Servlet implementation class ListAction
+ * Servlet implementation class ViewAction
  */
-@WebServlet("/address_my/listAction.amy")
-public class ListAction extends HttpServlet {
+@WebServlet("/address_my/viewAction.amy")
+public class ViewAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListAction() {
+    public ViewAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,13 +36,12 @@ public class ListAction extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		int num=Integer.parseInt(request.getParameter("num"));
 		SqlSessionFactory sqlMapper=MybatisManager.getSqlMapper();
 		SqlSession sqlSession=sqlMapper.openSession(ExecutorType.REUSE);
-		List<AddressVO> arr=sqlSession.selectList("listData");
-		int count=(Integer)sqlSession.selectOne("countSearchData");
-		request.setAttribute("arr", arr);
-		request.setAttribute("count", count);
-		RequestDispatcher rd=request.getRequestDispatcher("addrList.jsp");
+		AddressVO vo=sqlSession.selectOne("viewData",num);
+		request.setAttribute("address", vo);
+		RequestDispatcher rd=request.getRequestDispatcher("arrView.jsp");
 		rd.forward(request, response);
 	}
 
@@ -52,7 +49,6 @@ public class ListAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
