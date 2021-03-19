@@ -53,7 +53,7 @@
 	</tr>
 	<tr>
 		<td colspan="4">
-		<ol type="A">
+		<ol>
 			<li><input type="checkbox" name="program" value="한글">한글</li>
 			<li><input type="checkbox" name="program" value="한글">포토샵</li>
 			<li><input type="checkbox" name="program" value="한글">매크로 미디어 디렉터</li>

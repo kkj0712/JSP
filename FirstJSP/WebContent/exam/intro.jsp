@@ -20,10 +20,10 @@ ol.olType{
 	list-style-type: upper-roman;
 }
 </style>
-<table>
 </head>
 <body>
 <form action="introProc.jsp" method="post">
+<table>
 	<tr>
 		<th>성명</th>
 		<td><input type=text name=name></td>
@@ -89,7 +89,6 @@ ol.olType{
 	<tr>
 		<th colspan=4><input type=submit  value="전송" ><input type=reset name=reset value="다시쓰기"></th>
 	</tr>
-
 </table>
 </form>
 </body>
