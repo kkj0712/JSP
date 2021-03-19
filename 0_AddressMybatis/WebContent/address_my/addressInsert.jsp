@@ -54,9 +54,10 @@ function zipfinder(){
 		<td colspan="2"><input type="text" name="addr" id="addr" size=30>
 		</td>
 	</tr>
-	</tr>
+	<tr>
 		<td>전화번호</td>
 		<td colspan="2"><input type="text" name="tel" id="tel" size=15></td>
+	</tr>
 	<tr>
 		<td colspan="2">
 		<input type="submit" value="등록">
